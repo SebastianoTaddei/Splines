@@ -1,14 +1,14 @@
 puts "Setup submodules"
-system('git submodule init')
-system('git submodule update')
-system('git submodule sync')
-system('git submodule foreach --recursive git submodule init')
-system('git submodule foreach --recursive git submodule update')
-system('git submodule foreach --recursive git submodule sync')
 
-puts ARGV
+# Change to the directory where this script is located
+Dir.chdir(File.dirname(__FILE__))
 
-if ARGV.size() > 0 && ARGV[0] == "--last" then
-  puts "\nUpdate submodules to last version"
-  system('git submodule foreach --recursive git pull')
-end
+# Clone submodules
+system('git clone --branch 1.0.0 --depth 1 https://github.com/SebastianoTaddei/cmake_utils.git cmake_utils')
+system('git clone --branch 1.1.2 --depth 1 https://github.com/SebastianoTaddei/GenericContainer.git submodules/GenericContainer')
+system('git clone --branch 1.0.2 --depth 1 https://github.com/SebastianoTaddei/UtilsLite.git submodules/UtilsLite')
+system('git clone --branch 1.1.2 --depth 1 https://github.com/SebastianoTaddei/quarticRootsFlocke.git submodules/quarticRootsFlocke')
+
+system('ruby submodules/GenericContainer/setup.rb')
+system('ruby submodules/UtilsLite/setup.rb')
+system('ruby submodules/quarticRootsFlocke/setup.rb')
